@@ -15,7 +15,6 @@ def save_books(books):
     with open("books.json", "w", encoding="utf-8") as f:
         json.dump(books, f, ensure_ascii=False, indent=4)
 
-
 def add_book(books):
     print("\nДобавление новой книги:")
     author = input("Автор: ").strip()
@@ -54,6 +53,40 @@ def add_book(books):
     print(f"Книга '{title}' добавлена!")
 
 
+def show_books(books):
+    """Показывает список всех книг"""
+    if not books:
+        print("\nСписок книг пуст.")
+        return
+    print("\nСписок прочитанных книг:")
+    for i, book in enumerate(books, 1):
+        print(f"{i}. {book['author']} — {book['title']} (оценка: {book['rating']}, дата: {book['date']})")
+
+
+def average_rating(books):
+    """Показывает среднюю оценку всех книг"""
+    if not books:
+        print("\nНет книг для расчёта средней оценки.")
+        return
+    total = sum(book['rating'] for book in books)
+    avg = total / len(books)
+    print(f"\nСредняя оценка всех книг: {avg:.2f}")
+
+
+def author_stats(books):
+    """Показывает количество книг каждого автора"""
+    if not books:
+        print("\nНет книг для статистики по авторам.")
+        return
+    stats = {}
+    for book in books:
+        author = book['author']
+        stats[author] = stats.get(author, 0) + 1
+    print("\nСтатистика по авторам:")
+    for author, count in stats.items():
+        print(f"{author}: {count} книг(а)")
+
+
 def main():
     books = load_books()
     while True:
@@ -68,26 +101,19 @@ def main():
 
         if choice == "1":
             add_book(books)
-
         elif choice == "2":
-            print("Список книг (заглушка)")
-
+            show_books(books)
         elif choice == "3":
-            print("Средняя оценка (заглушка)")
-
+            average_rating(books)
         elif choice == "4":
-            print("Статистика по авторам (заглушка)")
-
+            author_stats(books)
         elif choice == "5":
             print("Удаление книги (заглушка)")
-
         elif choice == "6":
             print("До свидания!")
             break
-
         else:
             print("Неверный ввод, попробуйте снова.")
-
 
 if __name__ == "__main__":
     main()
