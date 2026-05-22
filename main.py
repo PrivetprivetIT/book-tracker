@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 
 
 def load_books():
@@ -32,6 +33,15 @@ def add_book(books):
             print("Пожалуйста, введите целое число.")
 
     date = input("Дата прочтения (например, 2025-03-20): ").strip()
+
+    # Проверка формата даты
+    while True:
+        try:
+            datetime.strptime(date, "%Y-%m-%d")
+            break
+        except ValueError:
+            print("Неверный формат даты. Используйте ГГГГ-ММ-ДД (например, 2025-03-20)")
+            date = input("Дата прочтения: ").strip()
 
     # Проверка дупликатов (автор + название)
     for book in books:
