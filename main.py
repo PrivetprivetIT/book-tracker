@@ -87,6 +87,25 @@ def author_stats(books):
         print(f"{author}: {count} книг(а)")
 
 
+def delete_book(books):
+    if not books:
+        print("\nНет книг для удаления.")
+        return
+    print("\nСписок книг:")
+    for i, book in enumerate(books, 1):
+        print(f"{i}. {book['author']} — {book['title']}")
+    try:
+        idx = int(input("Введите номер книги для удаления: ")) - 1
+        if 0 <= idx < len(books):
+            removed = books.pop(idx)
+            save_books(books)
+            print(f"Книга '{removed['title']}' удалена.")
+        else:
+            print("Неверный номер.")
+    except ValueError:
+        print("Введите число.")
+
+
 def main():
     books = load_books()
     while True:
@@ -108,7 +127,7 @@ def main():
         elif choice == "4":
             author_stats(books)
         elif choice == "5":
-            print("Удаление книги (заглушка)")
+            delete_book(books)
         elif choice == "6":
             print("До свидания!")
             break
