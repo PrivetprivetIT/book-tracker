@@ -55,6 +55,7 @@ def add_book(books):
 
 
 def main():
+    books = load_books()
     while True:
         print("\n1. Добавить книгу")
         print("2. Показать все книги")
@@ -66,7 +67,6 @@ def main():
         choice = input("Выберите действие: ")
 
         if choice == "1":
-            books = load_books()
             add_book(books)
 
         elif choice == "2":
